@@ -1,0 +1,1 @@
+# jQuery Image Annotation Tool
