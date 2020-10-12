@@ -4,21 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>jQuery UI (Draggable Widget)</title>
-  <style>
-  #draggable { width: 150px; height: 150px; padding: 0.5em; background-color: #eee; }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $(function() {
-    $("#draggable").draggable();
+    $("#draggable").draggable({
+      containment: 'parent',
+      scroll: false
+    });
   });
   </script>
 </head>
 <body>
 
-<div id="draggable">
-  <p>Drag me around</p>
+<div id="wrapper">
+
+  <header>jQuery UI sample</header>
+
+  <div id="container">
+    <div id="draggable">
+      <p>Drag me around</p>
+    </div>
+  </div>
+
 </div>
 
 </body>
