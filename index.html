@@ -45,8 +45,39 @@
         const point = $("#draggable-point" + i);
         handlePositions[i].x = (point.position().left + point.outerWidth() / 2) / canvasWidth;
         handlePositions[i].y = (point.position().top + point.outerHeight() / 2) / canvasHeight;
+        drawAnnotation();
       });
     }
+
+    const drawAnnotation = () => {
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      ctx.beginPath();
+      ctx.moveTo(handlePositions[0].x * canvasWidth, handlePositions[0].y * canvasHeight);
+      for (let i = 1; i < numHandles; i++) {
+        ctx.lineTo(handlePositions[i].x * canvasWidth, handlePositions[i].y * canvasHeight);
+      }
+      ctx.closePath();
+      ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
+      ctx.fill();
+      ctx.strokeStyle = "rgb(0, 0, 255)";
+      ctx.stroke();
+
+      for (let i = 0; i < numHandles; i++) {
+        const cx = handlePositions[i].x * canvasWidth;
+        const cy = handlePositions[i].y * canvasHeight;
+        const radius = handleRadius * canvasWidth;
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "rgb(255, 255, 255)";
+        ctx.fill();
+        ctx.strokeStyle = "rgb(0, 0, 0)";
+        ctx.stroke();
+      }
+    }
+
+    drawAnnotation();
 
   });
   </script>
