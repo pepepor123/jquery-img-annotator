@@ -10,23 +10,44 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
   <script>
   $(function() {
-    $('#canvas').attr('width', 300);
-    $('#canvas').attr('height', 300);
+
+    const canvasWidth = 300;
+    const canvasHeight = 300;
+
+    $('#canvas').attr('width', canvasWidth);
+    $('#canvas').attr('height', canvasHeight);
     const ctx = $("#canvas")[0].getContext('2d');
-    ctx.fillRect(0, 0, 30, 30);
 
-    const numPoints = 8;
+    const numHandles = 8;
+    const handleRadius = 0.03;
+    const handlePositions = [
+      {x: 0.50, y: 0.50},
+      {x: 0.30, y: 0.60},
+      {x: 0.30, y: 0.75},
+      {x: 0.35, y: 0.85},
+      {x: 0.50, y: 0.90},
+      {x: 0.65, y: 0.85},
+      {x: 0.70, y: 0.75},
+      {x: 0.70, y: 0.60}
+    ];
 
-    for (let i = 0; i < numPoints; i++) {
+    for (let i = 0; i < numHandles; i++) {
+      const left = canvasWidth * (handlePositions[i].x - handleRadius);
+      const top = canvasHeight * (handlePositions[i].y - handleRadius);
+      $("#draggable-point" + i).css({left: left, top: top});
+
       $("#draggable-point" + i).draggable({
         containment: 'parent',
         scroll: false
       });
 
       $("#draggable-point" + i).on("drag", (event, ui) => {
-        console.log(ui.position);
+        const point = $("#draggable-point" + i);
+        handlePositions[i].x = (point.position().left + point.outerWidth() / 2) / canvasWidth;
+        handlePositions[i].y = (point.position().top + point.outerHeight() / 2) / canvasHeight;
       });
     }
+
   });
   </script>
 </head>
@@ -37,7 +58,6 @@
   <header>jQuery UI sample</header>
 
   <div id="container">
-    <canvas id="canvas"></canvas>
     <img id="face-image" src="./abe.png">
     <div class="draggable" id="draggable-point0"></div>
     <div class="draggable" id="draggable-point1"></div>
@@ -47,6 +67,7 @@
     <div class="draggable" id="draggable-point5"></div>
     <div class="draggable" id="draggable-point6"></div>
     <div class="draggable" id="draggable-point7"></div>
+    <canvas id="canvas"></canvas>
   </div>
 
 </div>
