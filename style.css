@@ -49,3 +49,7 @@ header {
   background-color: #dfd;
   opacity: 0;
 }
+
+#info {
+  padding: 10px;
+}
