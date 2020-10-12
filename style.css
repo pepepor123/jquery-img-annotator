@@ -7,6 +7,7 @@
 }
 
 #wrapper {
+  min-width: 320px;
   background: #fff;
   font-size: 100%;
   font-family: sans-serif;
@@ -21,12 +22,15 @@ header {
   text-align: center;
 }
 
+#content {
+  margin: 10px auto;
+  max-width: 600px;
+}
+
 #container {
   position: relative;
-  margin: 10px auto;
+  margin: 0 auto;
   width: 95%;
-  min-width: 320px;
-  max-width: 600px;
   background-color: #ddf;
   touch-action: manipulation;
   -webkit-user-select: none;
