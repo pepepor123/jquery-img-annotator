@@ -9,17 +9,9 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
   <script>
-  $(function() {
-
-    const canvasWidth = 300;
-    const canvasHeight = 300;
-
-    $('#canvas').attr('width', canvasWidth);
-    $('#canvas').attr('height', canvasHeight);
-    const ctx = $("#canvas")[0].getContext('2d');
+  $(window).load(() => {
 
     const numHandles = 8;
-    const handleRadius = 0.03;
     const handlePositions = [
       {x: 0.50, y: 0.50},
       {x: 0.30, y: 0.60},
@@ -31,25 +23,35 @@
       {x: 0.70, y: 0.60}
     ];
 
-    for (let i = 0; i < numHandles; i++) {
-      const left = canvasWidth * (handlePositions[i].x - handleRadius);
-      const top = canvasHeight * (handlePositions[i].y - handleRadius);
-      $("#draggable-point" + i).css({left: left, top: top});
+    const setDimensions = () => {
+      const currentWidth = $('#container').width();
+      const currentHeight = currentWidth;
+      $('#container').height(currentHeight);
 
-      $("#draggable-point" + i).draggable({
-        containment: 'parent',
-        scroll: false
-      });
+      $('#face-image').width(currentWidth);
+      $('#face-image').height(currentHeight);
 
-      $("#draggable-point" + i).on("drag", (event, ui) => {
-        const point = $("#draggable-point" + i);
-        handlePositions[i].x = (point.position().left + point.outerWidth() / 2) / canvasWidth;
-        handlePositions[i].y = (point.position().top + point.outerHeight() / 2) / canvasHeight;
-        drawAnnotation();
-      });
+      const ratio = window.devicePixelRatio;
+      $('#canvas').attr('width', currentWidth * ratio);
+      $('#canvas').attr('height', currentHeight * ratio);
+      $('#canvas').width(currentWidth);
+      $('#canvas').height(currentHeight);
+      const ctx = $('#canvas')[0].getContext('2d');
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      for (let i = 0; i < numHandles; i++) {
+        const size = 30;
+        const left = currentWidth * handlePositions[i].x - size / 2;
+        const top = currentHeight * handlePositions[i].y - size / 2;
+        $('#draggable-point' + i).css({left: left, top: top});
+      }
     }
 
     const drawAnnotation = () => {
+      const canvasWidth = $('#canvas').width();
+      const canvasHeight = $('#canvas').height();
+      const ctx = $('#canvas')[0].getContext('2d');
+
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       ctx.beginPath();
@@ -58,25 +60,46 @@
         ctx.lineTo(handlePositions[i].x * canvasWidth, handlePositions[i].y * canvasHeight);
       }
       ctx.closePath();
-      ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
+      ctx.fillStyle = 'rgba(0, 0, 255, 0.2)';
       ctx.fill();
-      ctx.strokeStyle = "rgb(0, 0, 255)";
+      ctx.strokeStyle = 'rgb(0, 0, 255)';
       ctx.stroke();
 
       for (let i = 0; i < numHandles; i++) {
         const cx = handlePositions[i].x * canvasWidth;
         const cy = handlePositions[i].y * canvasHeight;
-        const radius = handleRadius * canvasWidth;
 
         ctx.beginPath();
-        ctx.arc(cx, cy, radius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = "rgb(255, 255, 255)";
+        ctx.arc(cx, cy, 10, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'rgb(255, 255, 255)';
         ctx.fill();
-        ctx.strokeStyle = "rgb(0, 0, 0)";
+        ctx.strokeStyle = 'rgb(0, 0, 0)';
         ctx.stroke();
       }
     }
 
+    for (let i = 0; i < numHandles; i++) {
+      $('#draggable-point' + i).draggable({
+        containment: 'parent',
+        scroll: false
+      });
+
+      $('#draggable-point' + i).on('drag', (event, ui) => {
+        const currentWidth = $('#container').width();
+        const currentHeight = $('#container').height();
+        const point = $('#draggable-point' + i);
+        handlePositions[i].x = (point.position().left + point.width() / 2) / currentWidth;
+        handlePositions[i].y = (point.position().top + point.height() / 2) / currentHeight;
+        drawAnnotation();
+      });
+    }
+
+    $(window).resize(() => {
+      setDimensions();
+      drawAnnotation();
+    });
+
+    setDimensions();
     drawAnnotation();
 
   });

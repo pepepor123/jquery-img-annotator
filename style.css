@@ -24,8 +24,9 @@ header {
 #container {
   position: relative;
   margin: 10px auto;
-  width: 300px;
-  height: 300px;
+  width: 95%;
+  min-width: 320px;
+  max-width: 600px;
   background-color: #ddf;
   touch-action: manipulation;
   -webkit-user-select: none;
@@ -39,14 +40,12 @@ header {
 
 #face-image {
   position: absolute;
-  width: 300px;
-  height: 300px;
 }
 
 #container .draggable {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background-color: #dfd;
   opacity: 0;
 }
