@@ -40,10 +40,9 @@ header {
   height: 300px;
 }
 
-#draggable {
+#container .draggable {
   position: absolute;
-  width: 100px;
-  height: 100px;
-  padding: 0.5em;
-  background-color: #eee;
+  width: 20px;
+  height: 20px;
+  background-color: #dfd;
 }
