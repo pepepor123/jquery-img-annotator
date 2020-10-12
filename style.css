@@ -29,6 +29,11 @@ header {
   background-color: #ddf;
 }
 
+#canvas {
+  position: absolute;
+  pointer-events: none;
+}
+
 #draggable {
   position: absolute;
   width: 100px;
