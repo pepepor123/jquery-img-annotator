@@ -24,9 +24,9 @@
     ];
 
     const setDimensions = () => {
-      const currentWidth = $('#container').width();
+      const currentWidth = $('#canvas-container').width();
       const currentHeight = currentWidth;
-      $('#container').height(currentHeight);
+      $('#canvas-container').height(currentHeight);
 
       $('#face-image').width(currentWidth);
       $('#face-image').height(currentHeight);
@@ -93,8 +93,8 @@
       });
 
       $('#draggable-point' + i).on('drag', (event, ui) => {
-        const currentWidth = $('#container').width();
-        const currentHeight = $('#container').height();
+        const currentWidth = $('#canvas-container').width();
+        const currentHeight = $('#canvas-container').height();
         const point = $('#draggable-point' + i);
         handlePositions[i].x = (point.position().left + point.width() / 2) / currentWidth;
         handlePositions[i].y = (point.position().top + point.height() / 2) / currentHeight;
@@ -123,7 +123,7 @@
 
   <div id="content">
 
-    <div id="container">
+    <div id="canvas-container">
       <img id="face-image" src="./abe.png">
       <canvas id="canvas"></canvas>
       <div class="draggable" id="draggable-point0"></div>

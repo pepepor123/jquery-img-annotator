@@ -27,7 +27,7 @@ header {
   max-width: 600px;
 }
 
-#container {
+#canvas-container {
   position: relative;
   margin: 0 auto;
   width: 95%;
@@ -46,7 +46,7 @@ header {
   position: absolute;
 }
 
-#container .draggable {
+#canvas-container .draggable {
   position: absolute;
   width: 30px;
   height: 30px;
