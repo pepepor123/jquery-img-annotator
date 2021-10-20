@@ -1,5 +1,6 @@
 $(window).load(() => {
 
+  // 丸の数と座標
   const numHandles = 8;
   const handlePositions = [
     {x: 0.50, y: 0.50},
@@ -12,6 +13,7 @@ $(window).load(() => {
     {x: 0.70, y: 0.60}
   ];
 
+  // 画像のサイズをウィンドウサイズに応じて調整する関数
   const setDimensions = () => {
     const currentWidth = $('#canvas-container').width();
     const currentHeight = currentWidth;
@@ -36,6 +38,7 @@ $(window).load(() => {
     }
   }
 
+  // 丸の座標を使って青い図形を描画する関数
   const drawAnnotation = () => {
     const canvasWidth = $('#canvas').width();
     const canvasHeight = $('#canvas').height();
@@ -67,6 +70,7 @@ $(window).load(() => {
     }
   }
 
+  // ページ下部に表示される丸の座標を更新する関数
   const showHandlePositions = () => {
     for (let i = 0; i < numHandles; i++) {
       const x = handlePositions[i].x;
@@ -92,6 +96,7 @@ $(window).load(() => {
     });
   }
 
+  // ウィンドウサイズが変化したら描画しなおす
   $(window).resize(() => {
     setDimensions();
     drawAnnotation();
